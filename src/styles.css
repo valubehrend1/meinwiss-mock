@@ -1,0 +1,117 @@
+:root{
+  --text: #1f2937;
+  --muted: #6b7280;
+  --brand: #ffcc33;
+  --blue: #3b82f6;
+  --red: #c2410c;
+  --teal: #0f766e;
+  --sand: #f5d77b;
+  --card: #ffffff;
+  --border: #e5e7eb;
+  --shadow: 0 6px 18px rgba(0,0,0,.08);
+  --radius: 18px;
+}
+
+*{box-sizing:border-box}
+body{color:var(--text); background:#fff}
+.page{min-height:100dvh; display:flex; flex-direction:column}
+
+/* Topographic bg */
+.topo{
+  background-image: url('/topo.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top left;
+}
+
+/* Header */
+.header{
+  position:sticky; top:0; z-index:20;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(8px);
+  border-bottom:1px solid var(--border);
+}
+.header-inner{
+  max-width:1200px; margin:0 auto; padding:12px 20px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit}
+.brand-logo{width:36px;height:36px;border-radius:10px;background:#111;color:#fff;display:grid;place-items:center;font-weight:700}
+.brand-name{font-weight:700;letter-spacing:.2px}
+.nav{display:flex;gap:14px}
+.nav a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:10px}
+.nav a:hover{background:#f3f4f6;color:#111}
+
+/* Hero */
+.hero{
+  max-width:1200px; margin:28px auto 0; padding:30px 20px;
+  display:grid; grid-template-columns: 1.1fr .9fr; gap:24px; align-items:end;
+}
+.kicker{ color:#d8a20b; font-weight:700; letter-spacing:.04em; margin-bottom:10px }
+.headline{ font-size: clamp(2.2rem, 5vw, 4.2rem); line-height:1.02; margin:0 0 8px 0; font-weight:800; }
+.headline em{ font-style: italic; font-weight:900; position:relative; white-space:nowrap }
+.headline em::after{
+  content:""; position:absolute; left:0; right:0; bottom:6px; height:14px;
+  background: #f1cc43; z-index:-1; transform:skewX(-12deg);
+}
+.subhead{ color:#6b7280; font-size: clamp(1rem, 1.6vw, 1.15rem); margin:0 0 8px 0 }
+.help{
+  display:flex; align-items:center; gap:8px; color:#111; width:max-content;
+  background:#fff; border:1px solid var(--border); border-radius:999px; padding:6px 10px;
+  box-shadow: var(--shadow);
+}
+.help .dot{ width:18px; height:18px; border-radius:50%; display:grid; place-items:center; border:2px solid #111; font-size:12px }
+
+/* Steps stack on right */
+.steps{
+  display:grid; gap:14px; align-items:end; justify-items:stretch;
+}
+.step{
+  color:#fff; border-radius:12px; padding:18px 18px;
+  display:flex; align-items:center; justify-content:space-between;
+  box-shadow: var(--shadow);
+}
+.step small{ opacity:.95 }
+.step b{ font-size:1.05rem }
+.step--teal{ background:#117a74 }
+.step--sand{ background:#f0c769; color:#111 }
+.step--red{ background:#b34343 }
+.step--blue{ background:#3e6a8e }
+
+/* First row below hero */
+.pre-grid{ margin-top:18px }
+.pre-grid-inner{
+  max-width:1200px; margin:0 auto; padding:0 20px 24px;
+  display:grid; grid-template-columns: 1fr 360px; gap:26px;
+}
+.cards{ display:grid; gap:16px; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); }
+.card{
+  background: var(--card); border:1px solid var(--border); border-radius: var(--radius);
+  padding:16px; box-shadow: var(--shadow);
+}
+.card h3{ margin:0 0 6px 0; font-size:1.05rem }
+.card p{ margin:0; color:var(--muted) }
+
+/* Search block */
+.search{
+  background:#fff; border:1px solid var(--border); border-radius: var(--radius);
+  padding:16px; height: fit-content; box-shadow: var(--shadow);
+}
+.search label{
+  display:block; color:#111; font-weight:800; letter-spacing:.04em;
+  border-bottom:8px solid var(--brand); width:max-content; padding-bottom:4px; margin-bottom:12px
+}
+.search input{
+  width:100%; padding:12px 10px; border:1px solid #cbd5e1; border-radius:10px; font-size:1rem
+}
+
+/* Iframe */
+.section{ max-width:1200px; margin: 10px auto; padding: 0 20px 28px; }
+.section-title{ font-size: 1.3rem; margin: 12px 0 }
+.iframe-wrap{ border:1px dashed var(--border); border-radius: 14px; padding:12px; background:#fafafa }
+.ratio{ position:relative; width:100%; padding-top:56.25%; overflow:hidden; border-radius:12px; background:#111 }
+.ratio iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; background:#fff }
+
+/* Footer */
+.footer{ border-top:1px solid var(--border); margin-top:auto }
+.footer-inner{ max-width:1200px; margin:0 auto; padding:18px 20px; color:var(--muted) }
