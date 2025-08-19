@@ -14,10 +14,118 @@
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
         background: #ffffff;
       }
+      
+      /* Estilos para el widget de chat */
+      .chat-iframe-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 500px;
+        height: 500px;
+        z-index: 1000;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        background-color: #f0f0f0;
+      }
+
+      .chat-iframe-container.minimized {
+        height: 50px;
+      }
+
+      .chat-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .toggle-chat-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #00301e;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 999;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .toggle-chat-btn:hover {
+        background-color: #004d31;
+      }
+
+      .hidden {
+        display: none;
+      }
     </style>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Widget de Chat -->
+    <div id="chat-container" class="chat-iframe-container">
+      <iframe src="https://meinwiss-iframe.vercel.app" class="chat-iframe" id="chat-iframe"></iframe>
+    </div>
+
+    <button id="toggle-chat-btn" class="toggle-chat-btn hidden">?</button>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const chatContainer = document.getElementById('chat-container');
+        const chatIframe = document.getElementById('chat-iframe');
+        const toggleButton = document.getElementById('toggle-chat-btn');
+        let isChatVisible = true;
+
+        // Función para mostrar/ocultar el chat
+        function toggleChat() {
+          if (isChatVisible) {
+            chatContainer.classList.add('hidden');
+            toggleButton.classList.remove('hidden');
+          } else {
+            chatContainer.classList.remove('hidden');
+            toggleButton.classList.add('hidden');
+          }
+          isChatVisible = !isChatVisible;
+        }
+
+        // Escuchar mensajes desde el iframe
+        window.addEventListener('message', function (event) {
+          // Verificar origen por seguridad en producción
+          // if (event.origin !== "https://meinwiss-iframe.vercel.app") return;
+
+          if (event.data.type === 'CHAT_WIDGET_TOGGLE') {
+            if (event.data.isMinimized) {
+              chatContainer.classList.add('minimized');
+            } else {
+              chatContainer.classList.remove('minimized');
+            }
+          }
+        });
+
+        // Click en el botón de toggle
+        toggleButton.addEventListener('click', toggleChat);
+
+        // Enviar comandos al iframe
+        function sendCommandToChat(command) {
+          chatIframe.contentWindow.postMessage(
+            {
+              type: 'PARENT_COMMAND',
+              command: command,
+            },
+            '*'
+          );
+        }
+      });
+    </script>
   </body>
 </html>
